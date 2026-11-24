@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Economics - Tutorial 1 Practice Exam</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --error: #dc2626;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        .question-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .option-item {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .option-item:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+        .option-item.correct {
+            background: #dcfce7;
+            border-color: var(--success);
+            color: #166534;
+            font-weight: 600;
+        }
+        .option-item.incorrect {
+            background: #fee2e2;
+            border-color: var(--error);
+            color: #991b1b;
+        }
+        .feedback {
+            margin-top: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .score-board {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #eff6ff;
+            border-radius: 8px;
+            border: 1px solid #bfdbfe;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 2rem;
+        }
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Tutorial 1: The Ricardian Model & Gravity Model</h1>
+        <p>Interactive Practice Exam</p>
+    </header>
+
+    <div class="score-board">
+        Tutorial 1 Score: <span id="score">0</span> / <span id="total">0</span>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <button class="btn" id="restart-btn" onclick="loadQuiz()" style="display:none;">Restart Tutorial 1</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "1. Evaluate the statement: Mexico is close to the U.S. and trades heavily with it, while Brazil is far from both and splits trade. Based on the gravity model, I would:",
+            options: [
+                "A. disagree. The larger the difference in economic size, the more countries will trade.",
+                "B. agree. Distance is the sole determinant of bilateral trade flows.",
+                "C. disagree. The gravity model accounts for economic size (GDP) as well as distance, so Brazil trades substantially with both major U.S. and E.U. markets.",
+                "D. agree. Countries equidistant from major markets split trade equally regardless of GDP."
+            ],
+            answer: 2
+        },
+        {
+            question: "2. A country has a comparative advantage in producing a good if:",
+            options: [
+                "A. Its opportunity cost of producing that good in terms of other goods is lower than in the other country[cite: 3].",
+                "B. It requires more absolute labor hours than its trading partner.",
+                "C. It maintains strict import quotas.",
+                "D. Its nominal wage rate is lower."
+            ],
+            answer: 0
+        },
+        {
+            question: "3. When one country can produce a unit of a good with less labor than another country, it possesses a(n):",
+            options: [
+                "A. Comparative advantage",
+                "B. Absolute advantage[cite: 3]",
+                "C. Competitive subsidy",
+                "D. Factor abundance"
+            ],
+            answer: 1
+        },
+        {
+            question: "4. Unit labor requirement is defined as:",
+            options: [
+                "A. The number of hours of labor required to produce one unit of output[cite: 3].",
+                "B. The quantity of output produced with one hour of labor.",
+                "C. The amount of non-labor inputs required per unit.",
+                "D. Output produced without using labor."
+            ],
+            answer: 0
+        },
+        {
+            question: "5. The Ricardian model demonstrates that:",
+            options: [
+                "A. Trade will always benefit both countries equally.",
+                "B. Trade may benefit both if each exports the product in which it has a comparative advantage[cite: 3].",
+                "C. Trade benefits only the country with a larger labor force.",
+                "D. Trade always harms the technologically inferior country."
+            ],
+            answer: 1
+        },
+        {
+            question: "6. If a production possibilities frontier is a straight line, then production occurs under conditions of:",
+            options: [
+                "A. Increasing opportunity costs",
+                "B. Constant opportunity costs[cite: 3]",
+                "C. Decreasing opportunity costs",
+                "D. Infinite opportunity costs"
+            ],
+            answer: 1
+        },
+        {
+            question: "7. [Unit Labor Table: Home Cloth=10, Widgets=20; Foreign Cloth=60, Widgets=30]. Given this table, who has comparative advantage?",
+            options: [
+                "A. Neither country has a comparative advantage in cloth.",
+                "B. Home has a comparative advantage in widgets.",
+                "C. Home has a comparative advantage in cloth, and Foreign has a comparative advantage in widgets[cite: 3].",
+                "D. Home has a comparative advantage in both goods."
+            ],
+            answer: 2
+        },
+        {
+            question: "8. [Unit Labor Table: Home Cloth=10, Widgets=20; Foreign Cloth=60, Widgets=30]. Given this table, Home should:",
+            options: [
+                "A. Export cloth and import widgets[cite: 3].",
+                "B. Export widgets and import cloth.",
+                "C. Export both and import nothing.",
+                "D. Remain entirely autarkic."
+            ],
+            answer: 0
+        }
+    ];
+
+    let score = 0;
+    let answeredCount = 0;
+
+    function loadQuiz() {
+        score = 0;
+        answeredCount = 0;
+        document.getElementById("score").innerText = score;
+        document.getElementById("total").innerText = quizData.length;
+        document.getElementById("restart-btn").style.display = "none";
+        
+        const container = document.getElementById("quiz-container");
+        container.innerHTML = "";
+
+        quizData.forEach((q, qIndex) => {
+            const card = document.createElement("div");
+            card.className = "quiz-card";
+
+            let optionsHtml = "";
+            q.options.forEach((opt, oIndex) => {
+                optionsHtml += `<li class="option-item" onclick="selectOption(${qIndex}, ${oIndex}, this)">${opt}</li>`;
+            });
+
+            card.innerHTML = `
+                <div class="question-title">${q.question}</div>
+                <ul class="options-list">${optionsHtml}</ul>
+                <div class="feedback" id="feedback-${qIndex}"></div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectOption(qIndex, oIndex, element) {
+        const card = element.closest(".quiz-card");
+        const options = card.querySelectorAll(".option-item");
+        const feedback = document.getElementById(`feedback-${qIndex}`);
+
+        if (card.getAttribute("data-answered") === "true") return;
+        card.setAttribute("data-answered", "true");
+
+        answeredCount++;
+
+        const correctOpt = quizData[qIndex].answer;
+
+        if (oIndex === correctOpt) {
+            element.classList.add("correct");
+            feedback.style.color = "var(--success)";
+            feedback.innerText = "Correct!";
+            score++;
+            document.getElementById("score").innerText = score;
+        } else {
+            element.classList.add("incorrect");
+            options[correctOpt].classList.add("correct");
+            feedback.style.color = "var(--error)";
+            feedback.innerText = `Incorrect. The correct answer is: ${quizData[qIndex].options[correctOpt]}`;
+        }
+
+        if (answeredCount === quizData.length) {
+            document.getElementById("restart-btn").style.display = "block";
+        }
+    }
+
+    loadQuiz();
+</script>
+
+</body>
+</html>
